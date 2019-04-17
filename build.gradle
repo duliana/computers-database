@@ -1,0 +1,30 @@
+group 'computer-database'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.testng', name: 'testng', version:'6.14.3'
+
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version:'3.141.59'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '3.141.59'
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+    compile group: 'org.apache.commons', name: 'commons-configuration2', version: '2.3'
+}
+
+
+test{
+    useTestNG() {
+        outputDirectory = file("$project.buildDir//testngOutput")
+        useDefaultListeners = true
+        suites 'src/test/suite.xml'
+        testLogging.showStandardStreams = true
+    }
+
+}

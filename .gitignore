@@ -1,0 +1,12 @@
+.idea/*
+.idea/libraries/*
+.DS_Store
+*.iml
+.gradle/
+build/
+out/
+*.html
+*_Diff.png
+*_Actual.png
+*.xlsx
+test.properties
