@@ -1,24 +1,36 @@
 package cases;
 
-//import org.junit.AfterClass;
-//import org.junit.BeforeClass;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITest;
 import utils.Browsers;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import utils.TestLogger;
+import utils.ExtentManager;
 
-public class BaseTest {
+
+public class BaseTest implements ITest {
     public static WebDriver driver;
-    public static String COMPUTERS_PAGE = "/computers";
     public static String ADD_COMPUTER_PAGE = "http://computer-database.herokuapp.com/computers/new";
+    public static String COMPUTERS_PAGE = "http://computer-database.herokuapp.com/computers";
+    public static TestLogger logger = TestLogger.getInstance();
+    protected static ExtentReports extent;
+    private static String testName = "";
 
-    protected String URL = "http://computer-database.herokuapp.com";
+    @Override
+    public String getTestName() {
+        return testName;
+    }
 
     @BeforeMethod(alwaysRun = true)
     public static void setup(){
-        driver = Browsers.getDriver();
+        Browsers.setDriver();
+
     }
 
     @AfterMethod(alwaysRun = true)
@@ -29,15 +41,18 @@ public class BaseTest {
         }
     }
 
-  /*  @BeforeClass
-    public static void setup(){
-        driver = Browsers.getDriver();
+    @BeforeSuite(alwaysRun = true)
+    public void beforeSuite(){
+
+        extent = ExtentManager.getInstance();
+        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("extent.html");
+        extent.attachReporter(htmlReporter);
     }
 
+    @AfterSuite
+    public static void AfterSuite(){
+        extent.flush();
 
-    @AfterClass
-    public static void trash(){
-        driver.close();
-        driver.quit();
-    }*/
+    }
+
 }

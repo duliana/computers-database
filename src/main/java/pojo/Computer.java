@@ -6,11 +6,10 @@ public class Computer {
     private String name;
     private String introducedDate;
     private String discontinuedDate;
-    //private String company;
 
     public Computer(){
 
-        setName("Test Computer" + RandomStringUtils.randomNumeric(5));
+        setName("Test Computer" + RandomStringUtils.randomNumeric(10));
         setIDate("1990-12-28");
         setDDate("2000-12-28");
     }

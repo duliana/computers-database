@@ -1,36 +1,26 @@
 package utils;
 
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
-import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.LocalFileDetector;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.safari.SafariOptions;
-
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
 
 public class Browsers {
 
     private static String setUrl;
-    private static WebDriver driver;
+
+    private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
+    private static WebDriver driver = null;
 
     public static synchronized WebDriver getDriver() {
+        return tlDriver.get();
+    }
 
+    public static synchronized void setDriver() {
         selectPath(Platform.getCurrent());
         driver = new ChromeDriver();
         setSetUrl("http://computer-database.herokuapp.com");
-        return driver;
+            tlDriver.set(driver);
+
     }
 
     protected static void selectPath(Platform platform) {
